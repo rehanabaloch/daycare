@@ -1,14 +1,33 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
 <html>
-	<head>
-		<title>Telephasic by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		
-		<link rel="stylesheet" href="assets/css/main.css" />
-         <script type="text/javascript" src="jquery-mobile/js/jquery-1.9.1.min.js"></script>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+       
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="jquery-mobile/js/jquery-1.9.1.min.js"></script>
         <script type="text/javascript" src="jquery-mobile/js/jquery.validate.min.js"></script>
-		
+        
+        <title>Hello World!</title>
         <script type="text/javascript">
             $(function(){
                $("#txtUserName").keypress(function() {                    
@@ -62,69 +81,22 @@
                 color:red;                
             }
     	</style>
-	</head>
-	<body class="homepage">
-		<div id="page-wrapper">
-
-			<!-- Header -->
-				<div id="header-wrapper">
-					<div id="header" class="container">
-
-						<!-- Logo -->
-							<h1 id="logo"><a href="#">Z LAND</a></h1>					
-
-					</div>
-
-					<!-- Hero -->
-						<section id="hero" class="container">
-							<header>
-								<h2>Heaven for Kids
-								<br />
-								Comfort for Mothers</h2>
-							</header>							
-						</section>
-                    
-                    	<div class="wrapper">
-						<div class="container">
-						<div class="row">
-							<div class="row">
-							<section class="6u 12u(narrower)">
-								<myform>
-									<div class="row 50%">
-										<div class="6u 12u(mobile)">
-											<input type="text" name="txtUserName" id="txtUserName" class="required" placeholder="Employee Id"/> <lable id="lblUsername" style="display:none;" class="error">Username is required</lable>
-										</div>
-										<div class="6u 12u(mobile)">
-											<input type="password" name="txtPassword" id="txtPassword" class="required" placeholder="Password"/><lable id="lblPassword" style="display:none;" class="error">Password is required</lable>
-										</div>
-									</div>									
-									<div class="row 50%">
-										<div class="12u">
-											<ul class="actions">
-												<li><input type="submit" name="btnSubmit" id="btnSubmit" value="Login" /></li>												
-											</ul>
-										</div>
-									</div>
-								</myform>
-							</section>							
-						</div>
-						</div>
-					</div>
-				</div>
-
-				</div>
-
-			
-		</div>
-
-		<!-- Scripts -->
-
-			<script src="assets/js/jquery.min.js"></script>
-			
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
-	</body>
+    </head>
+    <body>
+       
+           <table>
+               <tr>
+                   <td>User Name</td>
+                   <td><input type="text" name="txtUserName" id="txtUserName" class="required" placeholder="Employee Id"/> <lable id="lblUsername" style="display:none;" class="error">Username is required</lable>  </td>
+               </tr>
+               <tr>
+                   <td>Password</td>
+                   <td><input type="password" name="txtPassword" id="txtPassword" class="required" placeholder="Password"/><lable id="lblPassword" style="display:none;" class="error">Password is required</lable></td>
+               </tr>
+               <tr>               
+                   <td colspan="2"><input type="submit" name="btnSubmit" id="btnSubmit" value="Login"/></td>
+               </tr>
+            </table>
+         
+    </body>
 </html>

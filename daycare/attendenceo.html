@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+       
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="jquery-mobile/js/jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="jquery-mobile/js/jquery.validate.min.js"></script>
+        
+        <link href="datelib/themes/default.css" rel="stylesheet" type="text/css" /> 
+    	<link href="datelib/themes/default.date.css" rel="stylesheet" type="text/css" /> 
+    	<link href="datelib/themes/default.time.css" rel="stylesheet" type="text/css" /> 
+    	<link rel="stylesheet" href="assets/ui/themes/base/jquery.ui.all.css" type="text/css"> 
+    	<script src="datelib/picker.js"></script>
+        <script src="datelib/picker.date.js"></script>
+        <script src="datelib/picker.time.js"></script>
+        <script src="datelib/legacy.js"></script>
+       <script src="datelib/demo/scripts/main.js"></script>
+
+
+      <!--Jquery UI required links-->
+        <script src="assets/ui/jquery.ui.core.js"></script>
+      <script src="assets/ui/jquery.ui.widget.js"></script>
+      <script src="assets/ui/jquery.ui.position.js"></script>
+      <script src="assets/ui/jquery.ui.menu.js"></script>
+      <script src="assets/ui/jquery.ui.autocomplete.js"></script> 
+      <script src="assets/ui/jquery.ui.datepicker.js"></script> 
+        
+        
+        <title>Attendence</title>
+        <script type="text/javascript">
+            $(function(){
+               user=getUrlParameter('username');
+               
+                $.ajax({
+                                    type: "POST",
+                                    dataType: "html",                        
+                                    url: "http://oasms.zong.com.pk/phonegap/phonegap_getbabyname.php",
+                                    data: ({user: user }),
+                                    success: function(msg) {                                       
+                                        $("#kids").html(msg);
+                                    },
+                                    error: function(result) {
+                                    	alert("error");
+                                    }
+                                });
+                
+                $('.timepicker').pickatime({
+                    // Escape any “rule” characters with an exclamation mark (!).
+                    format: 'HH:i',
+                    formatLabel: function(time) {
+                        var hours = ( time.pick - this.get('now').pick ) / 60,
+                            label = hours < 0 ? ' !hours to now' : hours > 0 ? ' !hours from now' : 'now'
+                        return  'h:i a <sm!all>' + ( hours ? Math.abs(hours) : '' ) + label +'</sm!all>'
+                    },
+                    formatSubmit: 'HH:i',
+                    interval: 15,
+                    // min: [1,0],
+                   // max: [8,0]
+                  //  hiddenPrefix: 'prefix__',
+                   // hiddenSuffix: '__suffix'
+                });
+                
+                 var addedOn = new Date();    
+                 var month = addedOn.getMonth() + 1;
+                 if(month<10)
+                     {
+                         month="0"+month;
+                     }
+
+                 var day = addedOn.getDate();
+                 if(day<10)
+                     {
+                         day="0"+day;
+                     }
+                 var year = addedOn.getFullYear();
+                 var todate=year+"-"+month+"-"+day;
+                $("#cdate").html(todate);                
+                
+               
+                $("#chkTimeIn").click(function(){
+                   if($("#chkTimeIn").prop("checked"))
+                       {
+                           $("#timein").show();
+                           $("#timeout").hide();
+                           $("#chkTimeOut").prop("checked",false);
+                           $("#hdfChk").val('TimeIn');
+                       }
+                    else
+                        {
+                            $("#timein").hide();
+                        }
+                });
+                
+                $("#chkTimeOut").click(function(){
+                   if($("#chkTimeOut").prop("checked"))
+                       {
+                           $("#timein").hide();
+                           $("#timeout").show();
+                           $("#chkTimeIn").prop("checked",false);
+                           $("#hdfChk").val('TimeOut');
+                       }    
+                    else
+                        {
+                            $("#timeout").hide();
+                        }
+                });
+                
+                $("#btnSubmit").click(function(){
+                    var timechk=$("#hdfChk").val();
+                    var chkin="";
+                    if(timechk=="TimeIn")
+                        {
+                            chkin=$("#TimeIn").val();
+                        }
+                    else
+                        {
+                            chkin=$("#TimeOut").val();
+                        }
+                    $.ajax({
+                                    type: "POST",
+                                    dataType: "html",                        
+                                    url: "http://oasms.zong.com.pk/phonegap/phonegap_attendence.php",
+                                    data: ({user: user,timechkd:timechk,chkedin:chkin }),
+                                    success: function(msg) {                                       
+                                        if(msg==1)
+                                            {
+                                                alert("Thank you! Attendence has been marked.");
+                                                $("#chkTimeIn").prop("checked",false);
+                                                $("#chkTimeOut").prop("checked",false);
+                                                $("#timein").hide();
+                           						$("#timeout").hide();
+                                            }
+                                        else
+                                            {
+                                                alert("Sorry! You have already marked attendence.");
+                                            }
+                                    },
+                                    error: function(result) {
+                                    	alert("error");
+                                    }
+                                });
+                    $("#TimeIn").val('');
+                    $("#TimeOut").val('');
+                    
+                });
+            });
+            var getUrlParameter = function getUrlParameter(sParam) {
+                var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+
+                for (i = 0; i < sURLVariables.length; i++) {
+                    sParameterName = sURLVariables[i].split('=');
+
+                    if (sParameterName[0] === sParam) {
+                        return sParameterName[1] === undefined ? true : sParameterName[1];
+                    }
+                }
+            }
+        </script>
+        <style>
+            .error{
+                color:red;                
+            }
+    	</style>
+    </head>
+    <body>
+        <h5><div>Welcome! <label id="kids"></label> 's MoM <img src="img/images.png" height="20px" width="20px"/></div></h5>           
+            <table>   
+                <thead><td><div id="cdate"></div></td></thead>
+                <tr>
+                    <td><input type="checkbox" name="chkTimeIn" id="chkTimeIn" value="Time In"/>Time In</td>
+                    <td><input type="checkbox" name="chkTimeIn" id="chkTimeOut" value="Time Out"/>Time Out</td>
+                </tr>
+                <tr id="timein" style="display:none">
+                    <td>Time In</td>
+                    <td><input type="text" name="TimeIn" id="TimeIn" class="timepicker" placeholder="Pick Hours" class="required"/></td>
+                </tr>
+                <tr id="timeout" style="display:none">
+                    <td>Time Out</td>
+                    <td><input type="text" name="TimeOut" id="TimeOut" class="timepicker" placeholder="Pick Hours" class="required"/></td>
+                </tr>
+                <tr>
+                     <td colspan="2"><input type="submit" name="btnSubmit" id="btnSubmit" value="Submit"/></td>
+                </tr>
+            </table>  
+        	<input type="hidden" name="hdfChk" id="hdfChk"/>
+    </body>
+</html>
